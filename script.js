@@ -129,6 +129,8 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.querySelector('form');
     const responsesList = document.querySelector('#responses-list');
+    const searchNameInput = document.querySelector('#search-name');
+    const searchButton = document.querySelector('#search-button');
 
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
@@ -145,35 +147,37 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         try {
-            // Simulate submitting the form data (replace this with your actual logic)
-            // For the sake of this example, we'll just add it to an array.
             submitFormData(formData);
 
             alert('Form data submitted successfully!');
-            // Refresh the responses list
             loadResponses();
         } catch (error) {
             console.error('Error submitting form data:', error);
         }
     });
 
-    const submittedResponses = []; // Array to store submitted responses
+    const submittedResponses = [];
 
-    // Function to simulate submitting form data
     function submitFormData(data) {
         submittedResponses.push(data);
     }
 
-    // Function to load and display all responses
-    function loadResponses() {
+    function loadResponses(searchName = null) {
         responsesList.innerHTML = '';
         submittedResponses.forEach(response => {
-            const listItem = document.createElement('li');
-            listItem.textContent = `Name: ${response.name}, Email: ${response.email}, Group Link: ${response.group_link}, Bot: ${response.bot}`;
-            responsesList.appendChild(listItem);
+            if (!searchName || response.name.toLowerCase() === searchName.toLowerCase()) {
+                const listItem = document.createElement('li');
+                listItem.textContent = `Name: ${response.name}, Email: ${response.email}, Group Link: ${response.group_link}, Bot: ${response.bot}`;
+                responsesList.appendChild(listItem);
+            }
         });
     }
 
-    // Load responses when the page loads
     loadResponses();
+
+    // Search button event listener
+    searchButton.addEventListener('click', () => {
+        const searchName = searchNameInput.value;
+        loadResponses(searchName);
+    });
 });

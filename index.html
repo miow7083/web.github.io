@@ -89,44 +89,12 @@
 
             <!-- Submit button to send the form data -->
             <input type="submit" value="Add Elaina Bot">
+          <input type="text" id="search-name" placeholder="Enter name">
+            <button id="search-button">Search</button>
+
         </form>
       <script src="script.js"></script>
 
     </div>
 </body>
-</html>document.addEventListener('DOMContentLoaded', () => {
-    const form = document.querySelector('form');
-
-    form.addEventListener('submit', async (event) => {
-        event.preventDefault();
-
-        const name = form.querySelector('#name').value;
-        const email = form.querySelector('#email').value;
-        const groupLink = form.querySelector('#group_link').value;
-
-        const formData = {
-            name,
-            email,
-            group_link: groupLink,
-            bot: 'Elaina',
-        };
-
-        try {
-            const response = await fetch('send_data.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
-
-            if (response.ok) {
-                alert('Form data submitted successfully!');
-            } else {
-                alert('Error submitting form data.');
-            }
-        } catch (error) {
-            console.error('Error submitting form data:', error);
-        }
-    });
-});
+</html>
